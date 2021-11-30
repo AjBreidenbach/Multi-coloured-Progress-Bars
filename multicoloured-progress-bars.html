@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <script>
+      let completed = false
+      let elements = []
+      let handler = function () {
+        if(completed) {
+          elements.forEach(el => {el.style.width = '50%'; el.innerText = '50%'})
+          document.querySelector('button').innerText = 'Complete'
+          elements = []
+          completed = false
+          return
+        }
+        document.querySelectorAll('.progress-inner').forEach(el => {
+          elements.push(el)
+          el.style.width = '100%'
+        })
+
+        function incPercent(n) {
+          if (n > 0) {
+            for (let el of elements) {
+              if(elements.includes(el))
+                el.innerText = 101 - n + '%'
+            }
+
+            setTimeout(incPercent.bind(null, n - 1), 40)
+          }
+        }
+
+        incPercent(50)
+        document.querySelector('button').innerText = 'Reset'
+        completed = true
+      }
+
+    </script>
+  <style>
+
+body {margin: 0;}
+main {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
+
+.progress-outer {
+  width: 600px; 
+  height: 21px;
+  background-color: #ebebeb;
+  border-radius: 10.5px;
+  margin-bottom: 21px;
+  font-size: 75%;
+
+}
+
+.progress-inner {
+  text-shadow: white 0 1px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  border-radius: inherit;
+  box-sizing: border-box;
+  border-width: 2px;
+  border-style: solid;
+  color: #00000099;
+  background: repeating-linear-gradient(-45deg, #e1f2c5, #e1f2c5 1.8px, #d5eeaa 0, #d5eeaa 4px);
+  box-shadow: inset 0px -4px 16px -1px #71a518;
+  border-color: #95b763;
+  padding-right: 0.5em;
+  transition: width 2s;
+
+}
+
+/* Using filters for sake of code reuse */
+.green, .white {filter: drop-shadow(1px 1px 1px #bbbbbb);}
+.red {filter: drop-shadow(1px 1px 1px #bbbbbb) hue-rotate(280deg) brightness(0.79) contrast(1.7); }
+.white {background: white !important; box-shadow: unset; border-color: #c5c5c5;}
+.blue {filter: drop-shadow(1px 1px 1px #bbbbbb) hue-rotate(122deg);}
+.orange {filter: drop-shadow(1px 1px 1px #bbbbbb) hue-rotate(324deg) contrast(1.2) brightness(1.05);}
+
+button {
+  background-color: #157dff;
+  margin: 1em;
+  padding: 0.5em 2em;
+  color: white;
+  font-weight: 500;
+  border-style: none;
+}
+
+  </style>
+  </head>
+
+  <body>
+    <main>
+      <div style="max-width: 100%; overflow: auto;">
+        <div class="progress-outer"> <div class="progress-inner green" style="width: 50%;"> 50% </div> </div>
+        <div class="progress-outer"> <div class="progress-inner red" style="width: 50%;"> 50% </div> </div>
+        <div class="progress-outer"> <div class="progress-inner white" style="width: 50%;"> 50% </div> </div>
+        <div class="progress-outer"> <div class="progress-inner blue" style="width: 50%;"> 50% </div> </div>
+        <div class="progress-outer"> <div class="progress-inner orange" style="width: 50%;"> 50% </div> </div>
+
+    </div>
+      <div>
+        <div style="text-align: center;"><button onclick="handler()">Complete</button></div>
+        Andrew Breidenbach <a href="mailto:breidenbach.aj@gmail.com">breidenbach.aj@gmail.com</a>
+      </div>
+
+    </main>
+  </body>
+</html>
